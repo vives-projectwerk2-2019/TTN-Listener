@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^6.2.0",
+    "mqtt": "^2.18.8",
     "ttn": "^2.3.1"
   }
 }

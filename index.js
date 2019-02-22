@@ -1,6 +1,9 @@
+var mqtt = require("mqtt")
 var ttn = require("ttn")
 var appID = process.env.APP_ID
 var accessKey = process.env.ACCESS_KEY
+
+var client = mqtt.connect('mqtt://broker');
 
 ttn.data(appID, accessKey)
     .then(function (client) {
@@ -27,22 +30,7 @@ ttn.data(appID, accessKey)
         process.exit(1)
     })
 
-function postApi() {
-    var options = {
-        hostname: 'api',
-        port: 8080,
-        path: '/ttn/something',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-    };
-    var req = http.request(options, function(res) {
-            // On request finish
-            console.log('Status: ' + res.statusCode);
-        });
-    // Example body
-    result = '{ "hello": "json" }';
-    req.write('{"string": ' + result + '}');
-    req.end();
-}
+
+
+// Publish example
+client.publish('TTN', 'Hello mqtt');
