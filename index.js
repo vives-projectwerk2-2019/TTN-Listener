@@ -12,7 +12,8 @@ ttn.data(appID, accessKey)
             console.log("Received uplink from " + devID + " on port " + payload.port)
             if (payload.port == 48){
                 button = {
-                    button: payload.payload_fields.button
+                    button: payload.payload_fields.button,
+                    dev_id: payload.dev_id
                 }
                 mqttclient.publish('TTN', JSON.stringify(button));
                 console.log(JSON.stringify(button));
@@ -21,7 +22,8 @@ ttn.data(appID, accessKey)
                     id: payload.payload_fields.id,
                     add_1: payload.payload_fields.add_1,
                     add_2: payload.payload_fields.add_2,
-                    add_3: payload.payload_fields.add_3
+                    add_3: payload.payload_fields.add_3,
+                    dev_id: payload.dev_id
                 }
                 mqttclient.publish('TTN', JSON.stringify(newhardware));
                 console.log(JSON.stringify(newhardware));
