@@ -1,18 +1,20 @@
 var mqtt = require("mqtt")
 var ttn = require("ttn")
+require('dotenv').config()
 var appID = process.env.APP_ID
 var accessKey = process.env.ACCESS_KEY
 
-var client = mqtt.connect('mqtt://broker');
+var mqttclient = mqtt.connect('mqtt://labict.be');
 
 ttn.data(appID, accessKey)
     .then(function (client) {
         client.on("uplink", function (devID, payload) {
             console.log("Received uplink from " + devID + " on port " + payload.port)
-            if (payload.port == 0){
+            if (payload.port == 48){
                 button = {
                     button: payload.payload_fields.button
                 }
+                mqttclient.publish('TTN', JSON.stringify(button));
                 console.log(JSON.stringify(button));
             }else if (payload.port == 1){
                 newhardware = {
@@ -21,6 +23,7 @@ ttn.data(appID, accessKey)
                     add_2: payload.payload_fields.add_2,
                     add_3: payload.payload_fields.add_3
                 }
+                mqttclient.publish('TTN', JSON.stringify(newhardware));
                 console.log(JSON.stringify(newhardware));
             }
         })
@@ -29,8 +32,3 @@ ttn.data(appID, accessKey)
         console.error("Error", error)
         process.exit(1)
     })
-
-
-
-// Publish example
-client.publish('TTN', 'Hello mqtt');
