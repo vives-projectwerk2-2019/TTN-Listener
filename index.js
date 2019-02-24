@@ -4,7 +4,7 @@ require('dotenv').config()
 var appID = process.env.APP_ID
 var accessKey = process.env.ACCESS_KEY
 
-var mqttclient = mqtt.connect('mqtt://labict.be');
+var mqttclient = mqtt.connect('mqtt://' + process.env.BROKER_HOST);
 
 ttn.data(appID, accessKey)
     .then(function (client) {
