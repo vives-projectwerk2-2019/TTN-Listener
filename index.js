@@ -10,7 +10,7 @@ ttn.data(appID, accessKey)
     .then(function (client) {
         client.on("uplink", function (devID, payload) {
             console.log("Received uplink from " + devID + " on port " + payload.port)
-            if (payload.port == 2){
+            if (payload.port == 2 && isValid(payload)){
                 button = {
                     movement: payload.payload_fields.Movement,
                     action: payload.payload_fields.Action,
@@ -18,7 +18,7 @@ ttn.data(appID, accessKey)
                 }
                 mqttclient.publish('TTN', JSON.stringify(button));
                 console.log(JSON.stringify(button));
-            }else if (payload.port == 1){
+            }else if (payload.port == 1 && isValid(payload)){
                 newhardware = {
                     id: payload.payload_fields.id,
                     add_1: payload.payload_fields.add_1,
@@ -35,3 +35,11 @@ ttn.data(appID, accessKey)
         console.error("Error", error)
         process.exit(1)
     })
+
+    function isValid(payload) {
+        if(payload.payload_fields) {
+            return true
+        }else {
+            return false;
+        }
+    }
