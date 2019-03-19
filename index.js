@@ -6,6 +6,8 @@ var accessKey = process.env.ACCESS_KEY
 
 var mqttclient = mqtt.connect('mqtt://' + process.env.BROKER_HOST);
 
+newhardware = {};
+
 ttn.data(appID, accessKey)
     .then(function (client) {
         client.on("uplink", function (devID, payload) {
@@ -26,9 +28,9 @@ ttn.data(appID, accessKey)
                     add_3: payload.payload_fields.add_3,
                     dev_id: payload.dev_id
                 }
-                mqttclient.publish('TTN', JSON.stringify(newhardware));
-                console.log(JSON.stringify(newhardware));
             }
+            mqttclient.publish('hardware', JSON.stringify(newhardware));
+            console.log(JSON.stringify(newhardware));
         })
     })
     .catch(function (error) {
