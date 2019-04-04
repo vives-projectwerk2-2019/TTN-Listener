@@ -18,7 +18,7 @@ ttn.data(appID, accessKey)
                     action: payload.payload_fields.Action,
                     dev_id: payload.dev_id
                 }
-                mqttclient.publish('TTN', JSON.stringify(button));
+                mqttclient.publish('ttn', JSON.stringify(button));
                 console.log(JSON.stringify(button));
             }else if (payload.port == 1 && isValid(payload)){
                 newhardware = {
