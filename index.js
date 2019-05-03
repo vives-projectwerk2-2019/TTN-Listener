@@ -14,8 +14,8 @@ ttn.data(appID, accessKey)
             console.log("Received uplink from " + devID + " on port " + payload.port)
             if (payload.port == 2 && isValid(payload)){
                 button = {
-                    movement: payload.payload_fields.Movement,
-                    action: payload.payload_fields.Action,
+                    movement: payload.payload_fields.movement,
+                    action: payload.payload_fields.action,
                     dev_id: payload.dev_id
                 }
                 mqttclient.publish('ttn', JSON.stringify(button));
